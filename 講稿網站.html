@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>口頭報告講稿｜CABG HRR Study</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+  :root {
+    --bg:#0c0e14; --surface:#13161f; --surface2:#1a1e2b;
+    --border:#252b3b; --border2:#2e3650;
+    --accent:#4f8ef7; --green:#10b981; --yellow:#f59e0b;
+    --text:#dde3f0; --text2:#8892aa; --text3:#5a6478;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Serif TC','Microsoft JhengHei',serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+  /* HEADER */
+  .header{background:linear-gradient(135deg,#0d1220,#111827,#0f1520);border-bottom:1px solid var(--border);padding:24px 32px 20px;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(79,142,247,.08),transparent 70%);pointer-events:none}
+  .header-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+  .header h1{font-size:1.15rem;font-weight:700;color:#eef2ff;line-height:1.5;max-width:700px}
+  .header-meta{margin-top:10px;display:flex;gap:16px;flex-wrap:wrap}
+  .badge{display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);border-radius:20px;padding:3px 10px;font-size:.73rem;color:var(--text2);font-family:'JetBrains Mono',monospace}
+  .badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .badge .dot.green{background:var(--green)}
+
+  /* PROGRESS */
+  .progress-bar{height:3px;background:var(--border)}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#7c3aed);transition:width .3s ease}
+
+  /* LAYOUT */
+  .layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 113px)}
+
+  /* SIDEBAR */
+  .sidebar{background:var(--surface);border-right:1px solid var(--border);padding:16px 0;position:sticky;top:0;height:calc(100vh - 113px);overflow-y:auto}
+  .sidebar-section{padding:6px 14px 4px;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-top:8px}
+  .slide-btn{display:flex;align-items:center;gap:10px;width:100%;background:none;border:none;padding:7px 14px;cursor:pointer;text-align:left;border-left:3px solid transparent;transition:all .18s;font-family:inherit}
+  .slide-btn:hover{background:var(--surface2)}
+  .slide-btn.active{background:rgba(79,142,247,.08);border-left-color:var(--accent)}
+  .slide-num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text3);width:24px;flex-shrink:0}
+  .slide-title{font-size:.76rem;color:var(--text2);line-height:1.4}
+  .slide-btn.active .slide-title{color:#a5c0f8}
+  .slide-btn.active .slide-num{color:var(--accent)}
+
+  /* MAIN */
+  .main{padding:28px 32px;max-width:920px}
+  .slide-view{display:none}
+  .slide-view.active{display:block;animation:fadeUp .25s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* CARD */
+  .slide-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:20px}
+  .slide-card-header{background:linear-gradient(90deg,#141824,#1a1f2e);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+  .slide-card-header .tag{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);letter-spacing:1px}
+  .slide-card-title{font-size:1rem;font-weight:700;color:#c8d8ff}
+  .slide-preview{background:#0a0d14;border-bottom:1px solid var(--border);padding:20px 24px;min-height:80px}
+  .slide-preview-content{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text2);line-height:1.95}
+  .slide-preview-content .kw{color:#a5c0f8}
+  .slide-preview-content .val{color:#86efac}
+  .slide-preview-content .em{color:#fde68a}
+  .slide-preview-content .arrow{color:var(--accent)}
+  .slide-preview-content .sig{color:#6ee7b7;font-weight:bold}
+  .slide-preview-content .nosig{color:#5a6478}
+
+  /* SCRIPT */
+  .script-box{padding:22px 24px}
+  .script-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .script-label::after{content:'';flex:1;height:1px;background:var(--border)}
+  .script-text{font-size:.9rem;line-height:2.05;color:var(--text)}
+  .script-text p{margin-bottom:14px}
+  .script-text strong{color:#a5c0f8;font-weight:600}
+  .script-text em{color:var(--yellow);font-style:normal}
+
+  /* TIP */
+  .tip-note{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);border-radius:10px;padding:12px 16px;margin-top:14px;font-size:.82rem;color:#6ee7b7;line-height:1.7}
+  .tip-note .tip-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;color:var(--green);margin-bottom:5px}
+
+  /* FLOW */
+  .flow{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:8px 0}
+  .flow-box{background:#1a2035;border:1px solid #2a3a5e;border-radius:8px;padding:6px 12px;font-size:.76rem;color:#bfdbfe;text-align:center;line-height:1.4;font-family:'JetBrains Mono',monospace}
+  .flow-box.red{border-color:#7f1d1d;color:#fca5a5;background:#1f0d0d}
+  .flow-box.green{border-color:#064e3b;color:#6ee7b7;background:#0a1f17}
+  .flow-box.yellow{border-color:#78350f;color:#fde68a;background:#1c1508}
+  .flow-arrow{color:#4b77be;font-size:.9rem}
+
+  /* TABLE */
+  .mini-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.76rem}
+  .mini-table th{background:#141c2e;color:#7eb8f7;padding:7px 10px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:500}
+  .mini-table td{padding:6px 10px;text-align:center;border-top:1px solid #1a2035;color:var(--text2)}
+  .mini-table tr:nth-child(even) td{background:#0f1320}
+  .mini-table .sig{color:#6ee7b7;font-weight:bold}
+  .mini-table .nosig{color:#5a6478}
+  .mini-table .cr{color:#93c5fd}
+  .mini-table .hbe{color:#c4b5fd}
+  .mini-table .ctrl{color:#94a3b8}
+
+  /* NAV */
+  .nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding:14px 0;border-top:1px solid var(--border)}
+  .nav-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);border-radius:8px;padding:8px 18px;font-family:'JetBrains Mono',monospace;font-size:.78rem;cursor:pointer;transition:all .18s}
+  .nav-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+  .nav-btn:disabled{opacity:.3;cursor:not-allowed}
+  .nav-counter{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text3)}
+
+  /* Q&A */
+  .qa-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:14px}
+  .qa-q{font-size:.85rem;color:#fde68a;font-weight:600;margin-bottom:10px;display:flex;align-items:flex-start;gap:8px}
+  .qa-q::before{content:'Q';font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--yellow);background:rgba(245,158,11,.15);border-radius:4px;padding:1px 5px;flex-shrink:0;margin-top:2px}
+  .qa-a{font-size:.84rem;color:var(--text2);line-height:1.8;padding-left:26px}
+
+  /* ERROR TYPE TABLE */
+  .error-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.78rem}
+  .error-table th{background:#1a1020;color:#c4b5fd;padding:8px 12px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.68rem}
+  .error-table td{padding:7px 12px;border-top:1px solid #1a2035;color:var(--text2);text-align:center}
+  .error-table .t1{color:#fca5a5}
+  .error-table .t2{color:#86efac}
+  .error-table .ok{color:#6ee7b7}
+
+  ::-webkit-scrollbar{width:5px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">口頭報告講稿 · Interactive Script</div>
+  <h1>Cardiac Rehabilitation vs. Home Exercise After CABG<br>— A Comparison of Heart Rate Recovery</h1>
+  <div class="header-meta">
+    <span class="badge"><span class="dot"></span>Am J Phys Med Rehabil 2006;85:711–717</span>
+    <span class="badge"><span class="dot green"></span>Wu et al.</span>
+    <span class="badge">19 slides + Q&amp;A</span>
+  </div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="progress" style="width:5%"></div></div>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-section">Introduction</div>
+  <button class="slide-btn active" onclick="goTo(0)"><span class="slide-num">01</span><span class="slide-title">封面</span></button>
+  <button class="slide-btn" onclick="goTo(1)"><span class="slide-num">02</span><span class="slide-title">機制背景</span></button>
+  <button class="slide-btn" onclick="goTo(2)"><span class="slide-num">03</span><span class="slide-title">研究缺口</span></button>
+  <button class="slide-btn" onclick="goTo(3)"><span class="slide-num">04</span><span class="slide-title">研究目的</span></button>
+  <button class="slide-btn" onclick="goTo(4)"><span class="slide-num">05</span><span class="slide-title">HRR 定義</span></button>
+  <div class="sidebar-section">Methods</div>
+  <button class="slide-btn" onclick="goTo(5)"><span class="slide-num">06</span><span class="slide-title">受試者</span></button>
+  <button class="slide-btn" onclick="goTo(6)"><span class="slide-num">07</span><span class="slide-title">隨機分配 &amp; 盲化</span></button>
+  <button class="slide-btn" onclick="goTo(7)"><span class="slide-num">08</span><span class="slide-title">三組介入內容</span></button>
+  <button class="slide-btn" onclick="goTo(8)"><span class="slide-num">09</span><span class="slide-title">運動測試 &amp; HRR</span></button>
+  <button class="slide-btn" onclick="goTo(9)"><span class="slide-num">10</span><span class="slide-title">統計分析</span></button>
+  <div class="sidebar-section">Results</div>
+  <button class="slide-btn" onclick="goTo(10)"><span class="slide-num">11</span><span class="slide-title">Table 1 基線特徵</span></button>
+  <button class="slide-btn" onclick="goTo(11)"><span class="slide-num">12</span><span class="slide-title">基線無差異</span></button>
+  <button class="slide-btn" onclick="goTo(12)"><span class="slide-num">13</span><span class="slide-title">Table 2 結果參數</span></button>
+  <button class="slide-btn" onclick="goTo(13)"><span class="slide-num">14</span><span class="slide-title">HRR 組間結果</span></button>
+  <button class="slide-btn" onclick="goTo(14)"><span class="slide-num">15</span><span class="slide-title">靜息心率結果</span></button>
+  <div class="sidebar-section">Discussion</div>
+  <button class="slide-btn" onclick="goTo(15)"><span class="slide-num">16</span><span class="slide-title">組間比較討論</span></button>
+  <button class="slide-btn" onclick="goTo(16)"><span class="slide-num">17</span><span class="slide-title">組內比較討論</span></button>
+  <button class="slide-btn" onclick="goTo(17)"><span class="slide-num">18</span><span class="slide-title">機制與監督</span></button>
+  <button class="slide-btn" onclick="goTo(18)"><span class="slide-num">19</span><span class="slide-title">研究限制</span></button>
+  <div class="sidebar-section">Extra</div>
+  <button class="slide-btn" onclick="goTo(19)"><span class="slide-num">Q&amp;A</span><span class="slide-title">備用問答</span></button>
+</nav>
+
+<!-- MAIN -->
+<div class="main" id="mainContent">
+
+<!-- ═══ S01 封面 ═══ -->
+<div class="slide-view active" id="sv0">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 01 / COVER</span><span class="slide-card-title">封面</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="kw">Title</span>　Cardiac Rehabilitation vs. Home Exercise After Coronary Artery Bypass Graft Surgery<br>
+      <span class="kw">Journal</span>　Am J Phys Med Rehabil 2006;85:711–717　<span class="val">Wu et al.</span>
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>大家好，今天我要報告的是 <em>Cardiac Re-ha-bili-tation</em> vs. Home Exercise After Coronary Artery By-pass Graft Surgery。</p>
+        <p>（<strong>注音提示</strong>：Coronary → 扣恩乃瑞；Graft → 古 ru 夫）</p>
+      </div>
+      <div class="tip-note"><div class="tip-label">⏱ TIMING TIP</div>封面約 20–30 秒帶過即可。</div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" disabled>← 上一張</button>
+    <span class="nav-counter">1 / 19</span>
+    <button class="nav-btn" onclick="goTo(1)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S02 機制背景 ═══ -->
+<div class="slide-view" id="sv1">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 02 / INTRO</span><span class="slide-card-title">機制背景</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <div class="flow">
+        <div class="flow-box">CABG 手術</div><span class="flow-arrow">→</span>
+        <div class="flow-box red">↑ Sympathetic<br>tachycardia · ↓ HRV</div><span class="flow-arrow">→</span>
+        <div class="flow-box red">↑ 猝死風險</div>
+      </div>
+      <div class="flow" style="margin-top:10px">
+        <div class="flow-box yellow">有氧運動訓練</div><span class="flow-arrow">→</span>
+        <div class="flow-box green">↑ Parasympathetic tone → 改善 ANS</div>
+      </div>
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>根據過往的研究，我們發現 CABG 術後，常見<strong>交感神經活化</strong>，出現心搏過速（tachycardia）和 HRV 下降的問題。</p>
+        <p>而自律神經失調，與<strong>心因性猝死</strong>有直接關聯。</p>
+        <p>好消息是，<strong>運動訓練</strong>能提升副交感神經張力，進而改善自律神經功能。</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(0)">← 上一張</button>
+    <span class="nav-counter">2 / 19</span>
+    <button class="nav-btn" onclick="goTo(2)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S03 研究缺口 ═══ -->
+<div class="slide-view" id="sv2">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 03 / INTRO</span><span class="slide-card-title">Background — 研究缺口</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="em">Kligfield et al.</span>　HRR measured after <span class="kw">submaximal</span> effort, not peak exercise<br>
+      <span class="em">Nishime et al.</span>　CR: only a <span class="kw">trend</span> toward improved HRR — not significant<br>
+      <span class="em">Tiukinhoy et al.</span>　<span class="val">Significant</span> HRR improvement in CR<br>
+      <span class="arrow">⚠</span>　Inconsistent HRR definitions<br>
+      <span class="arrow">⚠</span>　No comparison between CR vs. home-based exercise on HRR
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>讓我們來看看過往的研究。</p>
+        <p><strong>Kligfield</strong>（克利格菲爾德）：調查了年齡與性別對 HRR 的影響，但 HRR 的測量有爭議——他們在<em>次大運動後</em>評估，而非峰值運動後。</p>
+        <p><strong>Nishime</strong>（尼西穆）：研究顯示心臟復健對 HRR<em>有改善的趨勢</em>，但未達統計顯著。</p>
+        <p><strong>Tiukinhoy</strong>（蒂烏金霍伊）：研究顯示了心臟復健組的<strong>顯著進步</strong>。</p>
+        <p>這些研究存在兩個問題：第一，對 HRR 的<strong>定義不一致</strong>；第二，<strong>沒有把居家運動納入研究</strong>進行比較。</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(1)">← 上一張</button>
+    <span class="nav-counter">3 / 19</span>
+    <button class="nav-btn" onclick="goTo(3)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S04 研究目的 ═══ -->
+<div class="slide-view" id="sv3">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 04 / INTRO</span><span class="slide-card-title">研究目的</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="val">RQ 1</span>　Does cardiac rehabilitation improve HRR in post-CABG patients?<br>
+      <span class="val">RQ 2</span>　How does CR compare to home-based exercise on HRR?<br>
+      <span class="kw">Intervention period:</span> <span class="val">12 weeks</span>
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>基於上述背景，這篇研究主要有<strong>兩個目的</strong>：</p>
+        <p>第一，<strong>心臟復健是否能改善 CABG 術後患者的 HRR？</strong></p>
+        <p>第二，<strong>心臟復健和居家運動對 HRR 的效果，兩者之間有沒有差異？</strong></p>
+        <p>介入期間為 12 週。</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(2)">← 上一張</button>
+    <span class="nav-counter">4 / 19</span>
+    <button class="nav-btn" onclick="goTo(4)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S05 HRR 定義 ═══ -->
+<div class="slide-view" id="sv4">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 05 / INTRO</span><span class="slide-card-title">Heart Rate Recovery（HRR）定義</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="kw">定義</span>　ΔBeats/min within <span class="val">1 min</span> after peak exercise<br>
+      <span class="kw">算法</span>　HRR = HR<sub style="font-size:.65em">peak</sub> − HR<sub style="font-size:.65em">1 min post-peak</sub><br>
+      <span class="kw">意義</span>　Predictor of cardiac disease &amp; all-cause mortality<br>
+      <span class="kw">機制</span>　CR hypothesized to improve HRR via ANS modulation<br>
+      <span class="kw">優點</span>　Easily measured
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>接下來看看研究團隊怎麼定義 HRR。</p>
+        <p>HRR 的定義是：<strong>peak exercise 結束後，第 1 分鐘內的心率下降量（ΔBeats/min）</strong>。</p>
+        <p>具體算法是：<em>峰值心率（HR peak）減去峰值運動後第 1 分鐘的心率</em>。數值愈大，代表心率下降愈快，副交感神經再活化愈好。</p>
+        <p>為什麼選這個指標？它是<strong>預測心臟病和全因死亡率的臨床標準</strong>，研究假設心臟復健能透過調節自律神經來改善 HRR，而且它<strong>容易測量</strong>，臨床實用性高。</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(3)">← 上一張</button>
+    <span class="nav-counter">5 / 19</span>
+    <button class="nav-btn" onclick="goTo(5)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S06 受試者 ═══ -->
+<div class="slide-view" id="sv5">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 06 / METHODS</span><span class="slide-card-title">受試者</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="kw">Inclusion</span>　54 (male) with angina pectoris (± pulmonary edema) → scheduled CABG<br>
+      <span class="val">With no:</span> prev. CABG · <span class="val">acute MI</span> · neurologic impairment · severe MSK disease · major in-hospital complications<br>
+      <span class="kw">Exclusion</span>　Uncontrolled dysrhythmia during EST · Unable to complete EST
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>再來看看研究的方法。對於受試者的篩選：</p>
+        <p><strong>納入</strong>的有：有心絞痛（可合併或不合併肺水腫）、接受擇期 CABG 手術的 54 位男性患者。</p>
+        <p>條件上必須<strong>沒有</strong>：先前的 CABG 手術史、<em>急性心肌梗塞（acute MI）</em>、神經學損傷、嚴重骨骼肌肉疾病，以及住院期間的重大併發症。</p>
+        <p><strong>排除</strong>的有：運動測試期間觀察到無法控制的心律異常，或無法完成測試者。</p>
+      </div>
+      <div class="tip-note"><div class="tip-label">⭐ KEY POINT</div>「有心絞痛但<strong>沒有急性 MI</strong>」是這個研究族群的重要特徵——這些是穩定性冠心病接受擇期手術的患者，不是急性發作，這也影響了我們對結果的推論範疇。</div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(4)">← 上一張</button>
+    <span class="nav-counter">6 / 19</span>
+    <button class="nav-btn" onclick="goTo(6)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S07 隨機分配 & 盲化 ═══ -->
+<div class="slide-view" id="sv6">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 07 / METHODS</span><span class="slide-card-title">隨機分配設計 &amp; 盲化設計</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="kw">Randomization</span>　54 male → drawing lots → <span class="val">3 × 18</span><br>
+      <span class="kw">Baseline EST</span>　At discharge, avg <span class="val">11.0 ± 2.4 days</span> post-op<br>
+      <span class="kw">Blind Design</span><br>
+      　① Subjects blinded to <span class="val">other groups' interventions</span><br>
+      　② EST evaluators <span class="val">masked to group assignments</span>
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>54 名受試者以<strong>抽籤方式</strong>隨機分配到 3 組，每組 18 人，並在出院時（平均術後第 11 天）完成一次基線壓力測試。</p>
+        <p>這篇研究採用了<strong>盲化設計（Blind Design）</strong>，具體分為兩個層次：</p>
+        <p>第一，<em>受試者對其他組別的介入內容不知情</em>——他們知道自己在做什麼（在醫院或在家），但不知道另外兩組在做什麼。</p>
+        <p>第二，<em>壓力測試的評估者不知道受試者的組別分配</em>，確保結果測量的客觀性。</p>
+        <p>這是在運動介入研究中能做到的合理盲化程度，並非完全的雙盲（participants 無法對自身介入完全盲化），但透過以上兩層盲化，已有效降低測量偏差的風險。</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(5)">← 上一張</button>
+    <span class="nav-counter">7 / 19</span>
+    <button class="nav-btn" onclick="goTo(7)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S08 三組介入 ═══ -->
+<div class="slide-view" id="sv7">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 08 / METHODS</span><span class="slide-card-title">三組介入內容</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="val">Group 1 — CR</span>　30–60 min aerobic · 60–85% peak HR · 3×/wk (36 sessions) · supervised PT<br>
+      <span class="val">Group 2 — HBE</span>　Same intensity · RPE 11–13 · ≥3×/wk · self-logged · biweekly nurse call<br>
+      <span class="val">Group 3 — Control</span>　Normal daily activity only
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p><strong>心臟復健組</strong>：在醫院參加 30–60 分鐘的有氧運動（腳踏車或慢跑），強度在峰值心率的 60–85%，前後各 10 分鐘暖身與緩和，每週 3 次共 36 次，全程由<em>心肺物理治療師</em>監測。</p>
+        <p><strong>居家運動組</strong>：建議快走或慢跑，強度、時間、頻率與心臟復健組相同；患者自行記錄日誌，護理師每兩週電話追蹤。居家難以直接測量心率，故<strong>另以伯格量表（RPE）11–13</strong> 作為強度參考。</p>
+        <p><strong>控制組</strong>：維持原本的日常作息，無特別指示。</p>
+      </div>
+      <div class="tip-note"><div class="tip-label">⭐ KEY POINT</div>「兩個運動組的<strong>強度處方完全一樣</strong>，唯一差別是有沒有人在旁監督」——這是後面 Discussion 解讀組間差異的核心前提。</div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(6)">← 上一張</button>
+    <span class="nav-counter">8 / 19</span>
+    <button class="nav-btn" onclick="goTo(8)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S09 運動測試 ═══ -->
+<div class="slide-view" id="sv8">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 09 / METHODS</span><span class="slide-card-title">運動壓力測試 &amp; HRR 測量</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="kw">Instrument</span>　Oxycon Pro cycle ergometer (Jaeger)<br>
+      <span class="kw">Protocol</span>　10W × 3min warm-up → +10W/min incremental → ACSM stop criteria<br>
+      <span class="kw">Recovery</span>　Continue pedaling at 10W ≥ 3 min + mouthpiece breathing<br>
+      <span class="kw">Monitor</span>　12-lead ECG + BP throughout<br>
+      <span class="kw">HRR calc.</span>　HR<sub style="font-size:.65em">peak</sub> − HR<sub style="font-size:.65em">1 min post-peak</sub>　(beats/min)
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>運動測試採用<strong>腳踏車測功儀</strong>（Oxycon Pro），每分鐘漸進增加 10W 的協定。先以 10W 暖身 3 分鐘，接著每分鐘加 10W，終止點參考 ACSM 標準。</p>
+        <p>恢復期以 10W 繼續踩踏至少 3 分鐘，並持續透過<em>咬嘴器</em>呼吸，全程 12 導聯心電圖 + 血壓監測。</p>
+        <p>HRR 的計算方式：<strong>峰值心率（HR peak）減去峰值運動結束後第 1 分鐘的心率</strong>，單位 beats/min。三組都在基線（出院時）和 12 週後各測一次。</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(7)">← 上一張</button>
+    <span class="nav-counter">9 / 19</span>
+    <button class="nav-btn" onclick="goTo(9)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S10 統計 ═══ -->
+<div class="slide-view" id="sv9">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 10 / METHODS</span><span class="slide-card-title">統計分析</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="kw">Between-group</span>　ANOVA → Tukey's HSD post-hoc (if significant)<br>
+      <span class="kw">Within-group</span>　Paired t-test（baseline vs. 12-wk）<br>
+      <span class="kw">Categorical</span>　Chi-square (χ²)<br>
+      <span class="kw">α =</span> <span class="val">0.05</span>
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>統計分析上，用 <strong>ANOVA</strong> 做組間比較，若達顯著再用 <strong>Tukey's HSD</strong> 確認哪兩組之間有差。</p>
+        <p>組內前後比較（基線 vs. 12 週）用 <strong>paired t-test</strong>；類別<strong>變項</strong>用卡方法（χ²）；顯著水準設定 P &lt; 0.05。</p>
+      </div>
+      <div class="tip-note"><div class="tip-label">⏱ TIMING TIP</div>這張約 30 秒帶過，聽眾不需要在統計方法上停留太久。</div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(8)">← 上一張</button>
+    <span class="nav-counter">10 / 19</span>
+    <button class="nav-btn" onclick="goTo(10)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S11 Table 1 ═══ -->
+<div class="slide-view" id="sv10">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 11 / RESULTS</span><span class="slide-card-title">Table 1 — 基線人口學特徵</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <table class="mini-table">
+        <tr><th>變項</th><th class="cr">CR (n=18)</th><th class="hbe">HBE (n=18)</th><th class="ctrl">Control (n=18)</th></tr>
+        <tr><td>Age (yrs)</td><td>62.8 ± 6.9</td><td>60.9 ± 7.6</td><td>62.2 ± 9.6</td></tr>
+        <tr><td>BMI (kg/m²)</td><td>26.4 ± 2.0</td><td>26.0 ± 1.8</td><td>25.2 ± 2.2</td></tr>
+        <tr><td>Ejection Fraction (%)</td><td>50.6 ± 2.1</td><td>51.1 ± 2.3</td><td>50.7 ± 2.4</td></tr>
+        <tr><td>Bypass / patient</td><td>3.2 ± 0.7</td><td>3.3 ± 0.6</td><td>3.0 ± 0.7</td></tr>
+        <tr><td>Hospital stay (days)</td><td>7.8 ± 3.1</td><td>8.4 ± 2.6</td><td>7.5 ± 3.4</td></tr>
+        <tr><td>Baseline test (days post-op)</td><td>10.9 ± 2.0</td><td>11.6 ± 2.7</td><td>10.5 ± 2.4</td></tr>
+      </table>
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>研究結果，首先看到基線特徵。納入的變項有年齡、身高、體重、藥物使用、病史、射血分數、冠狀動脈狹窄數等。</p>
+      </div>
+      <div class="tip-note"><div class="tip-label">⏱ TIMING TIP</div>Table 1 不用逐項念，帶一句「內容很多，下一張告訴你結論」，直接切到 Slide 12。</div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(9)">← 上一張</button>
+    <span class="nav-counter">11 / 19</span>
+    <button class="nav-btn" onclick="goTo(11)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S12 基線無差 ═══ -->
+<div class="slide-view" id="sv11">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 12 / RESULTS</span><span class="slide-card-title">基線特徵 — 無顯著差異</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="val">✓ All baseline characteristics: P &gt; 0.05</span><br>
+      Age: CR 62.8 · HBE 60.9 · Control 62.2 yrs　（P = 0.868）<br>
+      Ejection fraction: ~50–51% across all groups<br>
+      Medical history (DM / HTN / hyperlipidemia) — comparable
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>統計檢定的結果，在基準點上，<strong>所有特徵都沒有顯著差異</strong>，表示隨機化成功，確保後面的組間差異，並非來自基線的不均等。</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(10)">← 上一張</button>
+    <span class="nav-counter">12 / 19</span>
+    <button class="nav-btn" onclick="goTo(12)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S13 Table 2 ═══ -->
+<div class="slide-view" id="sv12">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 13 / RESULTS</span><span class="slide-card-title">Table 2 — 介入結果總覽</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <table class="mini-table">
+        <tr><th>指標</th><th>Test</th><th class="cr">CR</th><th class="hbe">HBE</th><th class="ctrl">Control</th><th>P (組間)</th></tr>
+        <tr><td>Resting HR (bpm)</td><td>Baseline</td><td>86.1</td><td>85.4</td><td>87.2</td><td class="nosig">0.615</td></tr>
+        <tr><td>Resting HR (bpm)</td><td>Follow-up</td><td class="cr">76.1*</td><td class="hbe">78.5*</td><td class="ctrl">83.9*</td><td class="sig">0.011 ✓</td></tr>
+        <tr><td>HRR (bpm)</td><td>Baseline</td><td>9.2</td><td>8.3</td><td>8.9</td><td class="nosig">0.794</td></tr>
+        <tr><td>HRR (bpm)</td><td>Follow-up</td><td class="cr">19.1*</td><td class="hbe">16.2*</td><td class="ctrl">14.0*</td><td class="sig">0.022 ✓</td></tr>
+        <tr><td>Peak VO₂ (mL/kg/min)</td><td>Follow-up</td><td class="cr">24.2*</td><td class="hbe">22.9*</td><td class="ctrl">19.5*</td><td class="sig">0.016 ✓</td></tr>
+      </table>
+      <div style="margin-top:6px;font-size:.68rem;color:#64748b">* p &lt; 0.05 vs. individual baseline ｜ ✓ Tukey's HSD: significance between CR and Control only</div>
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>再來看到介入的比較。主要可以看到：基線三組都沒有差異；組內各組都有顯著進步（標 * 號）；組間的具體情況，接下來兩張詳細說明。</p>
+      </div>
+      <div class="tip-note"><div class="tip-label">⏱ TIMING TIP</div>用三句話框架：「基線無差 → 組內都進步 → 組間只有 CR vs. Control 顯著」，然後切下一張。</div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(11)">← 上一張</button>
+    <span class="nav-counter">13 / 19</span>
+    <button class="nav-btn" onclick="goTo(13)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S14 HRR 結果 ═══ -->
+<div class="slide-view" id="sv13">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 14 / RESULTS</span><span class="slide-card-title">HRR — Between-Group at Follow-up</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="val">CR 19.1</span> vs. <span class="em">Control 14.0 bpm</span>　P = <span class="sig">0.022 ✓ Significant</span><br>
+      CR vs. HBE (16.2 bpm)　P = <span class="nosig">0.088　Not significant</span><br>
+      HBE vs. Control　P = <span class="nosig">0.247　Not significant</span><br>
+      <span class="kw">Within-group (all 3):</span> <span class="val">P &lt;0.001 · &lt;0.001 · 0.007</span> → All improved
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>在 HRR 方面：</p>
+        <p><strong>心臟復健組 vs. 控制組</strong>：<em>顯著</em>（P = 0.022）——CR 的 19.1 bpm 顯著高於 Control 的 14.0 bpm。這直接回答了第一個研究問題：心臟復健確實能改善 CABG 後的 HRR。</p>
+        <p><strong>心臟復健組 vs. 居家運動組</strong>：<em>不顯著</em>（P = 0.088）。</p>
+        <p><strong>居家運動組 vs. 控制組</strong>：<em>不顯著</em>（P = 0.247）。</p>
+        <p>三組組內都有<strong>顯著的進步</strong>。</p>
+      </div>
+      <div class="tip-note"><div class="tip-label">⭐ KEY POINT</div>這張是全篇核心數字，說「19.1 對 14.0，P = 0.022」時語速放慢，讓聽眾有時間記住。</div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(12)">← 上一張</button>
+    <span class="nav-counter">14 / 19</span>
+    <button class="nav-btn" onclick="goTo(14)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S15 靜息心率 ═══ -->
+<div class="slide-view" id="sv14">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 15 / RESULTS</span><span class="slide-card-title">靜息心率 — Between-Group at Follow-up</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="val">CR 76.1</span> vs. <span class="em">Control 83.9 bpm</span>　P = <span class="sig">0.011 ✓ Significant</span><br>
+      CR vs. HBE (78.5 bpm)　P = <span class="nosig">0.672　Not significant</span><br>
+      HBE vs. Control　P = <span class="nosig">0.062　Not significant</span><br>
+      <span class="kw">Within-group (all 3):</span> <span class="val">P &lt;0.001 · &lt;0.001 · 0.042</span> → All improved
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>在靜息心率上，也呈現一樣的 pattern：</p>
+        <p><strong>心臟復健組 vs. 控制組</strong>：<em>顯著</em>（P = 0.011）。</p>
+        <p><strong>心臟復健組 vs. 居家運動組</strong>：<em>不顯著</em>（P = 0.672）。</p>
+        <p><strong>居家運動組 vs. 控制組</strong>：<em>不顯著</em>（P = 0.062）。</p>
+        <p>兩個主要指標的組間結果一致，都指向同一個方向。</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(13)">← 上一張</button>
+    <span class="nav-counter">15 / 19</span>
+    <button class="nav-btn" onclick="goTo(15)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S16 Discussion 組間 ═══ -->
+<div class="slide-view" id="sv15">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 16 / DISCUSSION</span><span class="slide-card-title">組間比較的討論</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="em">CR vs. HBE</span>　P = 0.088　→　Insufficient statistical power? (n = 18/group)<br>
+      <span class="kw">HBE vs. Control</span>　P = 0.247　→　Despite NS, HBE numerically higher (16.2 vs. 14.0 bpm)<br>
+      <span class="val">→ Statistical non-significance ≠ No clinical difference</span>
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>再來是研究團隊的討論。先看到組間比較。</p>
+        <p>研究團隊認為，<strong>CR vs. HBE 不顯著（P = 0.088）</strong>，每組僅 18 人，<em>統計檢定力（statistical power）可能不足</em>。</p>
+        <p>而 <strong>HBE vs. 控制組（P = 0.247）</strong>，數值上 HBE 的改善幅度還是比較高（16.2 vs. 14.0 bpm），儘管沒有達到統計顯著，依然值得探討。</p>
+        <p>這是這篇研究的一個重要觀點：<strong>統計不顯著，並不一定代表沒有臨床療效的差異。</strong></p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(14)">← 上一張</button>
+    <span class="nav-counter">16 / 19</span>
+    <button class="nav-btn" onclick="goTo(16)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S17 Discussion 組內 ═══ -->
+<div class="slide-view" id="sv16">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 17 / DISCUSSION</span><span class="slide-card-title">組內比較 — 為什麼對照組也進步？</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="kw">Reason 1</span>　Natural ANS recovery post-CABG<br>
+      　↑ Sympathetic (wk 1–3) → Parasympathetic gradually restored by 3 months<br>
+      <span class="kw">Reason 2</span>　6 / 18 control subjects self-initiated exercise (walking / jogging)<br>
+      <span class="val">→ Control group contamination</span>
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>關於組內比較，三組都有顯著進步。研究團隊分析有兩個可能：</p>
+        <p>第一，<strong>自律神經系統的自然恢復能力</strong>：交感神經在術後 1–3 週活性最高，之後副交感神經會逐漸回升，約在 3 個月內趨於平衡，這是術後正常的生理過程。</p>
+        <p>第二，<strong>控制組有 6 / 18 人</strong>回報，在 12 週期間自發性產生了走路、慢跑的習慣，這構成了「<em>控制組污染（contamination）</em>」，也影響了數據，使得 HBE vs. Control 之間的差距更難達到統計顯著。</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(15)">← 上一張</button>
+    <span class="nav-counter">17 / 19</span>
+    <button class="nav-btn" onclick="goTo(17)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S18 機制與監督 ═══ -->
+<div class="slide-view" id="sv17">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 18 / DISCUSSION</span><span class="slide-card-title">機制與 CR vs. HBE 效果差距</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <div class="flow" style="margin-bottom:8px">
+        <div class="flow-box yellow">Exercise training</div><span class="flow-arrow">→</span>
+        <div class="flow-box green">↑ Parasympathetic · ↓ Sympathetic</div><span class="flow-arrow">→</span>
+        <div class="flow-box green">↓ Resting HR · ↑ HRR</div>
+      </div>
+      <span class="kw">CR &gt; HBE? Possible reasons:</span><br>
+      　<span class="em">①</span> Level of supervision　　<span class="em">②</span> Frequency of staff interaction
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>再來是研究團隊的其他討論。</p>
+        <p><strong>機制方面</strong>：運動訓練增加副交感活性、減少交感活性，從而降低靜息心率、增加心率恢復。</p>
+        <p>那<strong>為什麼居家運動組的成效可能較差</strong>？原因可能和<em>監督力度</em>有關：在醫院有治療師全程監督、有結構化的運動指引；居家運動仰賴患者自行記錄，每兩週才有一次電話指導，互動頻率的差異也會影響療效。</p>
+        <p>但根據 Smith 等人的報導，居家運動較能養成習慣性的身體活動，長期來看可能有更多益處。綜合來說，居家運動仍值得更多研究探討。</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(16)">← 上一張</button>
+    <span class="nav-counter">18 / 19</span>
+    <button class="nav-btn" onclick="goTo(18)">下一張 →</button>
+  </div>
+</div>
+
+<!-- ═══ S19 限制 ═══ -->
+<div class="slide-view" id="sv18">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">SLIDE 19 / DISCUSSION</span><span class="slide-card-title">研究限制</span></div>
+    <div class="slide-preview"><div class="slide-preview-content">
+      <span class="em">Limitation 1</span>　Male-only sample → cannot generalize to female patients<br>
+      　"the possible effects of age and <span class="kw">gender</span> on HRR after aerobic exercise training program were <span class="kw">limited</span>"<br>
+      <span class="em">Limitation 2</span>　Small sample size (n = 18/group) → underpowered<br>
+      　"The sample size … may be <span class="kw">expanded</span> to include different cardiac patients in the future studies."
+    </div></div>
+    <div class="script-box">
+      <div class="script-label">講稿</div>
+      <div class="script-text">
+        <p>最後來回顧一下這篇研究的限制。</p>
+        <p>研究團隊在討論中提到，<strong>所有 54 位受試者都是男性</strong>，所以還不確定結果能不能套用在女性患者身上。</p>
+        <p>第二是<strong>樣本數太小</strong>（每組僅 18 人），建議未來研究應該擴大樣本、納入不同類型的心臟病患者。</p>
+      </div>
+      <div class="tip-note"><div class="tip-label">⭐ CLOSING TIP</div>結尾可以回扣臨床意涵：「居家運動雖未達統計顯著，但改善幅度與心臟復健相近——對無法來醫院的患者，有結構的居家方案加上定期追蹤，是一個合理的替代選擇。這也提醒我們：監督與互動，是讓運動處方發揮效果的關鍵。」</div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(17)">← 上一張</button>
+    <span class="nav-counter">19 / 19</span>
+    <button class="nav-btn" onclick="goTo(19)">Q&amp;A 備用 →</button>
+  </div>
+</div>
+
+<!-- ═══ Q&A ═══ -->
+<div class="slide-view" id="sv19">
+  <div class="slide-card">
+    <div class="slide-card-header"><span class="tag">EXTRA / Q&amp;A</span><span class="slide-card-title">備用問答</span></div>
+    <div class="script-box">
+      <div class="script-label">預備題目</div>
+
+      <div class="qa-card">
+        <div class="qa-q">什麼是 Type I Error 和 Type II Error？這篇研究和哪種有關？</div>
+        <div class="qa-a">
+          統計假設檢定中有兩種錯誤：
+          <table class="error-table" style="margin:10px 0">
+            <tr><th>錯誤類型</th><th>中文名</th><th>定義</th><th>機率</th></tr>
+            <tr><td class="t1">Type I Error (α)</td><td>偽陽性</td><td>H₀ 為真，卻拒絕了它（誤以為有差異）</td><td>= α（通常 0.05）</td></tr>
+            <tr><td class="t2">Type II Error (β)</td><td>偽陰性</td><td>H₀ 為假，卻沒拒絕它（漏掉了真實差異）</td><td>= β</td></tr>
+            <tr><td class="ok">Statistical Power</td><td>統計效力</td><td>正確偵測到真實差異的能力</td><td>= 1 − β</td></tr>
+          </table>
+          這篇研究最相關的是 <strong>Type II Error</strong>（偽陰性）：HBE vs. Control 的 P = 0.247 沒有顯著——但這不一定代表兩者真的沒差。每組只有 18 人，樣本數不足（underpowered），導致統計效力太低，可能<em>漏掉了真實存在的差異</em>，這就是 Type II Error 的風險。換句話說，樣本數若更大，這個比較可能就會達到顯著。
+        </div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-q">為什麼三組組內都顯著進步，但組間只有 CR vs. Control 顯著？</div>
+        <div class="qa-a">Paired t-test 是各組自己和自己比，個體差異被配對抵消，統計效力強，容易達顯著。ANOVA + Tukey 是跨組比較，組間變異大加上樣本數小（n=18），就比較難達顯著。兩種「顯著」在性質上是不同的問題。</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-q">HRR 的精確算法是什麼？</div>
+        <div class="qa-a">原文定義：「The reduction in heart rate from <strong>immediately after peak exercise</strong> to the heart rate <strong>after 1 min</strong> was defined as heart rate recovery.」<br>所以：<strong>HRR = HR_peak − HR_at_1min_post_peak</strong>（beats/min）。數值愈大代表恢復愈快，副交感神經再活化愈好。測量時，恢復期受試者繼續以 10W 低負荷踩踏，確保測量環境一致。</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-q">居家運動組的依從性怎麼確認？</div>
+        <div class="qa-a">靠患者自行記錄日誌，加上每兩週一次的護理師電話追蹤。這是 self-report，無法像心臟復健組一樣有客觀出席紀錄。如果有受試者未確實執行，HBE 組的平均效果就會被低估，這是設計上的內在限制。</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-q">為什麼基線的靜息心率都偏高？</div>
+        <div class="qa-a">因為基線測試在術後第 11 天，交感神經仍在術後亢奮期，靜息心率普遍偏高。Kavanagh 和 Tiukinhoy 的研究基線測試在術後 14 週到 9 個月，自律神經早已部分自然恢復，所以基線心率相對低。這不是數據問題，而是測試時間點的選擇不同所造成的差異。</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-q">為什麼納入條件排除了急性心肌梗塞（acute MI）？</div>
+        <div class="qa-a">急性 MI 患者的心肌損傷程度、術後自律神經反應和恢復時程，與穩定性心絞痛患者有本質上的差異。若混合納入，基線異質性會大幅增加，干擾組間比較的效度。這個研究聚焦在穩定性冠心病接受擇期 CABG 的族群，讓結果更具內部效度（internal validity）。</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-q">這篇研究的主要臨床貢獻是什麼？</div>
+        <div class="qa-a">這是第一篇直接以 RCT 設計比較「監督式心臟復健」和「居家運動」對 HRR 影響的研究。結果讓臨床上有了依據：對無法參加 CR 的患者（費用、交通、時間等障礙），有結構的居家運動加上定期追蹤，是一個效果相近的合理替代方案。</div>
+      </div>
+
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="nav-btn" onclick="goTo(18)">← 回 Slide 19</button>
+    <span class="nav-counter">Q&amp;A</span>
+    <button class="nav-btn" disabled>結束</button>
+  </div>
+</div>
+
+</div><!-- .main -->
+</div><!-- .layout -->
+
+<script>
+const TOTAL = 20;
+let current = 0;
+function goTo(idx) {
+  document.getElementById('sv'+current).classList.remove('active');
+  document.querySelectorAll('.slide-btn')[current].classList.remove('active');
+  current = idx;
+  document.getElementById('sv'+current).classList.add('active');
+  document.querySelectorAll('.slide-btn')[current].classList.add('active');
+  document.getElementById('mainContent').scrollTop = 0;
+  window.scrollTo(0,0);
+  document.getElementById('progress').style.width = Math.round(current/(TOTAL-1)*100)+'%';
+}
+document.addEventListener('keydown', e => {
+  if (e.key==='ArrowRight' && current<TOTAL-1) goTo(current+1);
+  if (e.key==='ArrowLeft' && current>0) goTo(current-1);
+});
+</script>
+</body>
+</html>
